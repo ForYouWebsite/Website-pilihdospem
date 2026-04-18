@@ -197,12 +197,35 @@
                                     <td class="px-8 py-6">
                                         <div
                                             class="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+
+                                            <!-- EXPORT EXCEL PER PRODI -->
+                                            <a href="{{ route('pengajuan.export', $prodi->id) }}"
+                                                class="w-9 h-9 flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-emerald-600 hover:border-emerald-100 hover:bg-emerald-50 rounded-xl transition-all shadow-sm"
+                                                title="Export Excel">
+                                                <span data-lucide="file-down" class="w-4 h-4"></span>
+                                            </a>
+
+                                            <!-- RESET PENGAJUAN PER PRODI -->
+                                            <form action="/superadmin/reset-pengajuan/{{ $prodi->id }}"
+                                                method="POST" id="reset-form-{{ $prodi->id }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button"
+                                                    onclick="confirmResetPerProdi('{{ $prodi->id }}')"
+                                                    class="w-9 h-9 flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-100 hover:bg-rose-50 rounded-xl transition-all shadow-sm"
+                                                    title="Reset Pengajuan">
+                                                    <span data-lucide="refresh-ccw" class="w-4 h-4"></span>
+                                                </button>
+                                            </form>
+
+                                            <!-- EDIT -->
                                             <a href="{{ route('prodi.edit', $prodi->id) }}"
                                                 class="w-9 h-9 flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 rounded-xl transition-all shadow-sm"
                                                 title="Edit Data">
                                                 <span data-lucide="edit-3" class="w-4 h-4"></span>
                                             </a>
 
+                                            <!-- DELETE -->
                                             <form action="{{ route('prodi.destroy', $prodi->id) }}" method="POST"
                                                 class="inline" id="delete-form-{{ $prodi->id }}">
                                                 @csrf
@@ -213,6 +236,7 @@
                                                     <span data-lucide="trash-2" class="w-4 h-4"></span>
                                                 </button>
                                             </form>
+
                                         </div>
                                     </td>
                                 </tr>
@@ -282,6 +306,26 @@
                 }, 10);
             });
         });
+
+        function confirmResetPerProdi(id) {
+            Swal.fire({
+                title: 'Reset Pengajuan Prodi?',
+                text: "Semua data pengajuan pada prodi ini akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e11d48',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Ya, Reset',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    popup: 'rounded-[2.5rem]'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(`reset-form-${id}`).submit();
+                }
+            });
+        }
 
         function confirmDelete(id) {
             Swal.fire({

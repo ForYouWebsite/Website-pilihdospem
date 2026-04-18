@@ -21,9 +21,10 @@ class SuperAdminController extends Controller
         ]);
     }
 
-    public function reset()
+    public function reset($prodiId)
     {
-        Pengajuan::truncate();
-        return back()->with('success', 'Semua data pengajuan berhasil direset!');
+        Pengajuan::where('prodi_id', $prodiId)->delete();
+
+        return back()->with('success', 'Data pengajuan prodi berhasil direset!');
     }
 }

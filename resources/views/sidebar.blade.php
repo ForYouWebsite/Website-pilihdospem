@@ -102,16 +102,6 @@
                         class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-slate-50 {{ Request::is('superadmin/admin-user*') ? 'sidebar-active' : 'text-slate-600' }}">
                         <span data-lucide="users-round" class="w-5 h-5"></span> Kelola Admin
                     </a>
-
-                    <div class="pt-6 mt-6 border-t border-slate-100">
-                        <form id="formReset" action="/superadmin/reset-pengajuan" method="POST">
-                            @csrf @method('DELETE')
-                            <button type="button" onclick="confirmReset()"
-                                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-rose-600 transition-all duration-200 hover:bg-rose-50">
-                                <span data-lucide="refresh-ccw" class="w-5 h-5"></span> Reset Pengajuan
-                            </button>
-                        </form>
-                    </div>
                 @endif
 
                 @if (auth()->user()->role == 'admin')

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin - Sistem Dospem LPKIA</title>
+    <title>Login - Sistem Dospem LPKIA</title>
 
     <!-- Tailwind tetap dipertahankan untuk styling -->
     <script src="https://cdn.tailwindcss.com"></script>

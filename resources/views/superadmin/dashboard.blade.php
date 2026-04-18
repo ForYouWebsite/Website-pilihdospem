@@ -150,7 +150,7 @@
                         <span data-lucide="zap" class="w-5 h-5 text-amber-500 fill-amber-500"></span>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <a href="/prodi"
+                        <a href="/superadmin/prodi"
                             class="p-4 border border-slate-100 rounded-2xl flex items-center gap-4 hover:border-blue-200 hover:bg-blue-50/30 transition-all group">
                             <div
                                 class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
@@ -158,7 +158,7 @@
                             </div>
                             <span class="text-sm font-bold text-slate-700">Tambah Prodi Baru</span>
                         </a>
-                        <a href="/admin-user"
+                        <a href="/superadmin/admin-user"
                             class="p-4 border border-slate-100 rounded-2xl flex items-center gap-4 hover:border-blue-200 hover:bg-blue-50/30 transition-all group">
                             <div
                                 class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">

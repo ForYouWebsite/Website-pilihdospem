@@ -9,10 +9,17 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class PengajuanExport implements FromCollection, WithHeadings
 {
+    protected $prodiId;
+
+    public function __construct($prodiId)
+    {
+        $this->prodiId = $prodiId;
+    }
+
     public function collection()
     {
         return Pengajuan::with('dosen')
-            ->where('prodi_id', Auth::user()->prodi_id)
+            ->where('prodi_id', $this->prodiId) // ✅ GANTI DI SINI
             ->get()
             ->map(function ($p) {
                 return [

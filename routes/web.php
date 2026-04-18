@@ -38,8 +38,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
     Route::post('/admin/dpengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
 });
-Route::get('/pengajuan/export', [PengajuanController::class, 'export'])
-    ->middleware(['auth', 'role:admin'])
+
+
+Route::get('/superadmin/pengajuan/export/{prodiId}', [PengajuanController::class, 'export'])
+    ->middleware(['auth', 'role:superadmin'])
     ->name('pengajuan.export');
 
 
@@ -54,7 +56,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::resource('/superadmin/admin-user', AdminUserController::class);
 
     // RESET DATA
-    Route::delete('/superadmin/reset-pengajuan', [SuperAdminController::class, 'reset']);
+    Route::delete('/superadmin/reset-pengajuan/{prodiId}', [SuperAdminController::class, 'reset']);
 });
 
 // Route::middleware(['auth', 'role:mahasiswa'])->group(function () {

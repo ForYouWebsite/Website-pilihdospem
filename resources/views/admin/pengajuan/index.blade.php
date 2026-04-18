@@ -81,13 +81,7 @@
                     <h2 class="text-lg font-bold tracking-tight text-slate-800">Daftar Pengajuan</h2>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('pengajuan.export') }}"
-                        class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-2xl text-xs font-bold transition-all active:scale-95 shadow-lg shadow-emerald-100">
-                        <span data-lucide="file-spreadsheet" class="w-4 h-4"></span>
-                        Export Excel
-                    </a>
-                </div>
+
             </div>
         </nav>
 

@@ -66,7 +66,6 @@
                     <span class="text-xs font-semibold">{{ now()->format('l, d M Y') }}</span>
                     <div class="w-px h-4 bg-slate-200"></div>
                     <button class="relative hover:text-blue-600 transition-colors">
-                        <span data-lucide="bell" class="w-5 h-5"></span>
                         <span
                             class="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
                     </button>

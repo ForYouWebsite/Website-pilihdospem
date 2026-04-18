@@ -12,9 +12,9 @@ use App\Exports\PengajuanExport;
 
 class PengajuanController extends Controller
 {
-    public function export()
+    public function export($prodiId)
     {
-        return Excel::download(new PengajuanExport, 'data_pengajuan.xlsx');
+        return Excel::download(new PengajuanExport($prodiId), 'data_pengajuan.xlsx');
     }
     public function store(Request $request)
     {
