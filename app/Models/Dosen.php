@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
 {
-    protected $fillable = ['nama', 'bidang_keahlian', 'kuota', 'prodi_id'];
+    protected $fillable = ['nama', 'bidang_keahlian', 'kuota', 'jenjang', 'prodi_id'];
     //
     public function prodi()
     {
@@ -19,11 +19,15 @@ class Dosen extends Model
     }
     public function sisaKuota()
     {
-        return $this->kuota - $this->pengajuans()->count();
+        return $this->kuota - $this->pengajuans()
+            ->where('status', 'disetujui')
+            ->count();
     }
 
     public function isFull()
     {
-        return $this->pengajuans()->count() >= $this->kuota;
+        return $this->pengajuans()
+            ->where('status', 'disetujui')
+            ->count() >= $this->kuota;
     }
 }

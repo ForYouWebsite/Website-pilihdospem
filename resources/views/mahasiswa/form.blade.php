@@ -8,56 +8,45 @@
     @vite('resources/js/app.js')
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <!-- Tailwind tetap pakai CDN agar preview muncul. Di Laravel bisa hapus jika sudah install tailwind via npm -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!--
-        CATATAN INSTALASI NPM (WAJIB):
-        1. Jalankan di terminal:
-           npm install sweetalert2 lucide
-
-        2. Di resources/js/app.js tambahkan:
-           import Swal from 'sweetalert2';
-           import { createIcons, User, CreditCard, Phone, GraduationCap, ChevronDown, Users, Info, BookOpen, Send } from 'lucide';
-
-           window.Swal = Swal;
-           document.addEventListener('DOMContentLoaded', () => {
-               createIcons({ icons: { User, CreditCard, Phone, GraduationCap, ChevronDown, Users, Info, BookOpen, Send } });
-           });
-    -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+            background: #f8fafc;
             min-height: 100vh;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #0056b3, #e63946);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-pattern {
+            background-color: #0f172a;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        .input-group:focus-within label {
-            color: #0056b3;
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
 
             to {
@@ -66,226 +55,317 @@
             }
         }
 
-        /* Custom SweetAlert Style */
-        .swal2-toast {
-            border-radius: 16px !important;
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 86, 179, 0.1) !important;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+        .animate-slide-up {
+            animation: slideUp 0.6s ease-out forwards;
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased">
+<body class="text-slate-800 antialiased">
 
-    <!-- Header / Navbar -->
-    <nav class="sticky top-0 z-50 w-full glass-card border-b border-slate-100 py-4 px-6 mb-8">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-100">
-                    <img src="{{ asset('logo-lpkia.png') }}" alt="Logo LPKIA" class="h-10 w-auto">
+    <!-- Hero Welcome Section -->
+    <header class="hero-pattern text-white pt-16 pb-32 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+                <div class="flex items-center gap-4">
+                    <div class="bg-white p-2 rounded-2xl">
+                        <img src="{{ asset('logo-lpkia.png') }}" alt="Logo" class="h-12 w-auto">
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold leading-tight">Student Portal</h1>
+                        <p class="text-blue-400 text-xs font-bold tracking-widest uppercase">Institut Digital Ekonomi
+                            LPKIA</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-bold leading-tight text-slate-800 text-sm md:text-lg text-nowrap">Institut Digital
-                        Ekonomi</h1>
-                    <p class="text-[10px] md:text-xs font-semibold text-blue-600 tracking-wider uppercase">LPKIA -
-                        Bandung</p>
+                <div class="px-4 py-2 bg-white/10 rounded-full border border-white/10 text-xs backdrop-blur-md">
+                    <span class="text-blue-300">Tahun Akademik:</span> {{ date('Y') }}/{{ date('Y') + 1 }}
                 </div>
             </div>
-            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-                <span
-                    class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold border border-blue-100">Student
-                    Portal</span>
-            </div>
-        </div>
-    </nav>
 
-    <main class="max-w-4xl mx-auto px-4 pb-20">
+            <div class="max-w-3xl animate-slide-up">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+                    Selamat Datang, <span class="text-blue-400">Mahasiswa Kreatif!</span>
+                </h2>
+                <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                    Siap melangkah ke tahap akhir? Mulailah perjalanan Tugas Akhir/Skripsi Anda dengan memilih Dosen
+                    Pembimbing yang sesuai dengan minat penelitian Anda.
+                </p>
 
-        <!-- Welcome Section -->
-        <div class="text-center mb-10 animate-fade-in">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight leading-tight">
-                Pendaftaran <span class="gradient-text">Dosen Pembimbing</span>
-            </h2>
-            <p class="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                Silakan isi data diri Anda untuk pengajuan judul Tugas Akhir atau Skripsi. Pastikan memilih dosen yang
-                kuotanya masih tersedia.
-            </p>
-        </div>
-
-        <!-- Form Card -->
-        <div class="glass-card rounded-[2rem] overflow-hidden animate-fade-in shadow-2xl">
-            <div class="h-3 w-full bg-gradient-to-r from-blue-600 via-indigo-500 to-rose-500"></div>
-
-            <form id="formPendaftaran" method="POST" action="{{ route('mahasiswa.store') }}"
-                class="p-8 md:p-12 space-y-8">
-                @csrf
-
-                <!-- Personal Info Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-2 input-group">
-                        <label class="text-sm font-bold text-slate-700 ml-1 flex items-center gap-2">
-                            <i data-lucide="user" class="w-4 h-4 text-blue-500"></i> Nama Lengkap
-                        </label>
-                        <input type="text" name="nama_mahasiswa" required placeholder="Masukkan nama sesuai KTM"
-                            class="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200">
+                <!-- Quick Steps -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex items-center gap-3 bg-white/5 p-4 rounded-2xl border border-white/5">
+                        <div class="step-number">1</div>
+                        <span class="text-sm font-medium text-slate-300">Lengkapi Data Diri</span>
                     </div>
-
-                    <div class="space-y-2 input-group">
-                        <label class="text-sm font-bold text-slate-700 ml-1 flex items-center gap-2">
-                            <i data-lucide="credit-card" class="w-4 h-4 text-blue-500"></i> NIM
-                        </label>
-                        <input type="text" name="nim" required placeholder="Contoh: 040121001"
-                            class="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200">
+                    <div class="flex items-center gap-3 bg-white/5 p-4 rounded-2xl border border-white/5">
+                        <div class="step-number">2</div>
+                        <span class="text-sm font-medium text-slate-300">Pilih Topik & Dosen</span>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white/5 p-4 rounded-2xl border border-white/5">
+                        <div class="step-number">3</div>
+                        <span class="text-sm font-medium text-slate-300">Kirim Pengajuan</span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </header>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-2 input-group">
-                        <label class="text-sm font-bold text-slate-700 ml-1 flex items-center gap-2">
-                            <i data-lucide="phone" class="w-4 h-4 text-blue-500"></i> WhatsApp / No HP
-                        </label>
-                        <input type="text" name="no_hp" required placeholder="08xxxxxxxxx"
-                            class="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200">
-                    </div>
+    <!-- Main Content Area (Form) -->
+    <main class="max-w-5xl mx-auto px-6 -mt-20 pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                    <div class="space-y-2 input-group">
-                        <label class="text-sm font-bold text-slate-700 ml-1 flex items-center gap-2">
-                            <i data-lucide="graduation-cap" class="w-4 h-4 text-blue-500"></i> Program Studi
-                        </label>
-                        <div class="relative">
-                            <select name="prodi_id" id="prodi" required
-                                class="appearance-none w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200 cursor-pointer">
-                                <option value="" disabled selected>-- Pilih Program Studi --</option>
-                                @foreach ($prodis as $prodi)
-                                    <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
-                                @endforeach
-                            </select>
-                            <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            <!-- Form Section -->
+            <div class="lg:col-span-2 space-y-6 animate-slide-up" style="animation-delay: 0.2s">
+                <div
+                    class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                    <div class="p-8 md:p-10">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+                                <i data-lucide="form-input" class="w-5 h-5"></i>
                             </div>
+                            <h3 class="text-xl font-bold text-slate-800">Formulir Pendaftaran</h3>
                         </div>
+
+                        @if (session('error'))
+                            <div class="mb-6 bg-rose-50 border border-rose-200 text-rose-600 p-4 rounded-2xl">
+                                <strong>Gagal:</strong> {{ session('error') }}
+                            </div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="mb-6 bg-rose-50 border border-rose-200 text-rose-600 p-4 rounded-2xl">
+                                <ul class="text-sm space-y-1">
+                                    @foreach ($errors->all() as $error)
+                                        <li>• {{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form id="formPendaftaran" method="POST" action="{{ route('mahasiswa.store') }}"
+                            class="space-y-6">
+                            @csrf
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Nama -->
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Nama
+                                        Mahasiswa</label>
+                                    <div class="relative group">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                                            <i data-lucide="user" class="w-5 h-5"></i>
+                                        </div>
+                                        <input type="text" name="nama_mahasiswa" required
+                                            placeholder="Nama sesuai KTM"
+                                            class="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium">
+                                    </div>
+                                </div>
+
+                                <!-- NIM -->
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">NIM</label>
+                                    <div class="relative group">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                                            <i data-lucide="credit-card" class="w-5 h-5"></i>
+                                        </div>
+                                        <input type="text" name="nim" required placeholder="0401xxxx"
+                                            class="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- WhatsApp -->
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">WhatsApp
+                                        / No HP</label>
+                                    <div class="relative group">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                                            <i data-lucide="phone" class="w-5 h-5"></i>
+                                        </div>
+                                        <input type="text" name="no_hp" required placeholder="08xxxxxxxx"
+                                            class="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium">
+                                    </div>
+                                </div>
+
+                                <!-- Prodi -->
+                                <div class="space-y-2">
+                                    <label
+                                        class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Program
+                                        Studi</label>
+                                    <div class="relative group">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                                            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                                        </div>
+                                        <select name="prodi_id" id="prodi" required
+                                            class="appearance-none w-full pl-12 pr-10 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium cursor-pointer">
+                                            <option value="" disabled selected>Pilih Program Studi</option>
+                                            @foreach ($prodis as $prodi)
+                                                <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div
+                                            class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dosen Pembimbing -->
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Pilih
+                                    Dosen Pembimbing</label>
+                                <div class="relative group">
+                                    <div
+                                        class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                                        <i data-lucide="users" class="w-5 h-5"></i>
+                                    </div>
+                                    <select name="dosen_id" id="dosen" required
+                                        class="appearance-none w-full pl-12 pr-10 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium cursor-pointer disabled:bg-slate-100 disabled:text-slate-400">
+                                        <option value="" disabled selected>-- Pilih prodi terlebih dahulu --
+                                        </option>
+                                    </select>
+                                    <div
+                                        class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                        <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Judul -->
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Rencana
+                                    Judul / Topik</label>
+                                <textarea name="tema_ta" rows="4" required placeholder="Gambarkan secara singkat apa yang akan Anda teliti..."
+                                    class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" id="btnSubmit"
+                                class="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold text-lg hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-200 active:scale-95 transition-all flex items-center justify-center gap-3">
+                                <span>Kirim Pengajuan Sekarang</span>
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
+            </div>
 
-                <!-- Academic Selection -->
-                <div class="space-y-2 input-group">
-                    <label class="text-sm font-bold text-slate-700 ml-1 flex items-center gap-2">
-                        <i data-lucide="users" class="w-4 h-4 text-blue-500"></i> Dosen Pembimbing
-                    </label>
-                    <div class="relative">
-                        <select name="dosen_id" id="dosen" required
-                            class="appearance-none w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200 cursor-pointer disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed">
-                            <option value="" disabled selected>-- Pilih prodi terlebih dahulu --</option>
-                        </select>
-                        <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
-                        </div>
+            <!-- Sidebar Info Section -->
+            <div class="lg:col-span-1 space-y-6 animate-slide-up" style="animation-delay: 0.4s">
+                <!-- Info Box 1 -->
+                <div class="bg-blue-600 rounded-[2rem] p-8 text-white shadow-xl shadow-blue-200">
+                    <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="help-circle" class="w-6 h-6"></i>
                     </div>
-                    <p class="text-[10px] text-slate-400 italic ml-1 flex items-center gap-1">
-                        <i data-lucide="info" class="w-3 h-3"></i> Kuota diperbarui secara real-time oleh sistem
+                    <h4 class="text-lg font-bold mb-3">Butuh Bantuan?</h4>
+                    <p class="text-blue-100 text-sm leading-relaxed mb-6">
+                        Jika Anda mengalami kendala saat memilih dosen atau data prodi tidak muncul, silakan hubungi
+                        bagian Admin Prodi masing-masing.
                     </p>
+                    {{-- <a href="#"
+                        class="block w-full py-3 bg-white text-blue-600 rounded-xl font-bold text-center text-sm hover:bg-blue-50 transition-colors">
+                        Panduan Sistem
+                    </a> --}}
                 </div>
 
-                <!-- Thesis Topic -->
-                <div class="space-y-2 input-group">
-                    <label class="text-sm font-bold text-slate-700 ml-1 flex items-center gap-2">
-                        <i data-lucide="book-open" class="w-4 h-4 text-blue-500"></i> Judul / Tema Tugas Akhir
-                    </label>
-                    <textarea name="tema_ta" rows="4" required
-                        placeholder="Berikan gambaran singkat mengenai topik penelitian Anda..."
-                        class="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200 resize-none"></textarea>
+                <!-- Info Box 2 -->
+                <div class="bg-white rounded-[2rem] p-8 border border-slate-200">
+                    <h4 class="text-slate-800 font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="info" class="w-5 h-5 text-blue-500"></i>
+                        Penting
+                    </h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 text-sm text-slate-500">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 shrink-0"></i>
+                            Satu akun hanya diperbolehkan mendaftar satu kali.
+                        </li>
+                        <li class="flex gap-3 text-sm text-slate-500">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 shrink-0"></i>
+                            Pemilihan dosen bersifat "First Come First Served".
+                        </li>
+                        <li class="flex gap-3 text-sm text-slate-500">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 shrink-0"></i>
+                            Pastikan judul yang diajukan sudah dikonsultasikan sebelumnya.
+                        </li>
+                    </ul>
                 </div>
+            </div>
 
-                <!-- Submit Button -->
-                <div class="pt-4">
-                    <button type="submit" id="btnSubmit"
-                        class="group relative w-full bg-slate-900 text-white py-5 px-6 rounded-2xl font-bold overflow-hidden transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] active:scale-[0.98]">
-                        <span class="flex items-center justify-center gap-3">
-                            Kirim Pendaftaran
-                            <i data-lucide="send"
-                                class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                        </span>
-                    </button>
-                </div>
-            </form>
         </div>
 
-        <footer class="mt-12 text-center text-slate-400 text-sm">
-            <p>&copy; {{ date('Y') }} Institut Digital Ekonomi LPKIA Bandung.</p>
+        <footer class="mt-16 text-center text-slate-400 text-sm">
+            <p>&copy; {{ date('Y') }} Institut Digital Ekonomi LPKIA Bandung. All rights reserved.</p>
         </footer>
-
     </main>
 
     <script>
-        // Script ini berjalan dengan asumsi library di-import via NPM di app.js
         document.addEventListener('DOMContentLoaded', () => {
+            // Init Icons
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
 
-            // Toast Config (Menggunakan window.Swal yang sudah di-set di app.js)
-            const Toast = (typeof Swal !== 'undefined') ? Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            }) : null;
-            // console.log(window.Swal);
-            // Laravel Session Alert
-            @if (session('success'))
-                Toast?.fire({
+            // Toast Notifications (Simple custom version for demo)
+            const showToast = (type, title, message) => {
+                // You can keep your SweetAlert2 logic here as per your previous setup
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
                     icon: 'success',
-                    title: 'Berhasil!',
-                    text: "{{ session('success') }}"
+                    title: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
                 });
+            };
+
+            @if (session('success'))
+                showToast('success', 'Berhasil', '{{ session('success') }}');
             @endif
 
-            @if (session('error'))
-                Toast?.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: "{{ session('error') }}"
-                });
-            @endif
-
-            // Dynamic Dropdown Dosen
+            // Dynamic Dropdown Dosen (Same logic, better UI)
             document.getElementById('prodi').addEventListener('change', function() {
                 let prodiId = this.value;
                 let dosenSelect = document.getElementById('dosen');
 
                 dosenSelect.disabled = true;
-                dosenSelect.innerHTML = '<option>🔄 Sedang memuat...</option>';
+                dosenSelect.innerHTML = '<option> Memuat daftar dosen...</option>';
 
                 fetch('/get-dosen/' + prodiId)
                     .then(res => res.json())
                     .then(data => {
                         dosenSelect.disabled = false;
                         dosenSelect.innerHTML =
-                            '<option value="" disabled selected>-- Pilih Dosen --</option>';
+                            '<option value="" disabled selected>Pilih Dosen Pembimbing</option>';
 
                         data.forEach(d => {
                             let option = document.createElement('option');
                             if (d.full) {
-                                option.text = `🚫 ${d.nama} (Penuh)`;
+                                option.text = ` ${d.nama} (Kuota Penuh)`;
                                 option.disabled = true;
                             } else {
                                 option.value = d.id;
-                                option.text = `👨‍🏫 ${d.nama} (Sisa: ${d.sisa})`;
+                                option.text =
+                                    ` ${d.nama} - ${d.jenjang} (Sisa: ${d.sisa})`;
                             }
                             dosenSelect.appendChild(option);
                         });
                     });
             });
 
-            // Loading state saat submit
+            // Submit Loading
             document.getElementById('formPendaftaran').addEventListener('submit', function() {
                 const btn = document.getElementById('btnSubmit');
-                btn.innerHTML = '<span>Memproses...</span>';
-                btn.classList.add('opacity-70', 'pointer-events-none');
+                btn.innerHTML =
+                    '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i><span>Mengirim Data...</span>';
+                btn.classList.add('opacity-80', 'pointer-events-none');
+                window.lucide.createIcons();
             });
         });
     </script>

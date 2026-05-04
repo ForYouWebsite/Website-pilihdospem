@@ -85,6 +85,20 @@
                                     required>
                             </div>
                         </div>
+                        <!-- Jenjang -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-700 ml-1">Jenjang</label>
+                            <div class="relative group">
+                                <div
+                                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                                    <i data-lucide="layers" class="w-5 h-5"></i>
+                                </div>
+                                <input type="text" name="jenjang" value="{{ old('jenjang', $dosen->jenjang) }}"
+                                    placeholder="Contoh: S1 / D3 / S2 / S3"
+                                    class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 transition-all text-slate-700 font-medium"
+                                    required>
+                            </div>
+                        </div>
 
                         <!-- Alert Info -->
                         <div class="bg-indigo-50 rounded-2xl p-4 border border-indigo-100 flex gap-4 mt-6">

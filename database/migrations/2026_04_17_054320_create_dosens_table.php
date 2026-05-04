@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->text('bidang_keahlian');
             $table->integer('kuota');
+            $table->string('jenjang'); // S1 / D3
             $table->foreignId('prodi_id')->constrained()->cascadeOnDelete();
             $table->boolean('aktif')->default(true);
             $table->timestamps();

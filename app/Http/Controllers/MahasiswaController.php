@@ -24,6 +24,7 @@ class MahasiswaController extends Controller
             return [
                 'id' => $d->id,
                 'nama' => $d->nama,
+                'jenjang' => $d->jenjang,
                 'sisa' => $d->sisaKuota(),
                 'full' => $d->isFull()
             ];

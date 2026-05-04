@@ -25,9 +25,12 @@ class PengajuanController extends Controller
             return back()->with('error', 'Kuota dosen sudah penuh!');
         }
 
-        // 🔥 CEK NIM DOUBLE
-        if (Pengajuan::where('nim', $request->nim)->exists()) {
-            return back()->with('error', 'NIM sudah pernah mendaftar!');
+        $existing = Pengajuan::where('nim', $request->nim)
+            ->whereIn('status', ['pending', 'disetujui'])
+            ->first();
+
+        if ($existing) {
+            return back()->with('error', 'NIM anda sudah mengajukan, silakan tunggu ACC / Tolak');
         }
 
         Pengajuan::create([
@@ -54,14 +57,15 @@ class PengajuanController extends Controller
     {
         $pengajuan = Pengajuan::findOrFail($id);
 
-        // 🔥 SECURITY: pastikan 1 prodi
         if ($pengajuan->prodi_id != Auth::user()->prodi_id) {
             abort(403);
         }
 
-        // 🔥 hanya pending yang bisa diubah
         if ($pengajuan->status != 'pending') {
             return back()->with('error', 'Status sudah diproses!');
+        }
+        if ($pengajuan->dosen->isFull()) {
+            return back()->with('error', 'Kuota dosen sudah penuh!');
         }
 
         $pengajuan->update([
@@ -71,7 +75,7 @@ class PengajuanController extends Controller
         return back()->with('success', 'Pengajuan disetujui');
     }
 
-    public function reject($id)
+    public function reject(Request $request, $id)
     {
         $pengajuan = Pengajuan::findOrFail($id);
 
@@ -84,7 +88,8 @@ class PengajuanController extends Controller
         }
 
         $pengajuan->update([
-            'status' => 'ditolak'
+            'status' => 'ditolak',
+            'alasan' => $request->alasan
         ]);
 
         return back()->with('success', 'Pengajuan ditolak');

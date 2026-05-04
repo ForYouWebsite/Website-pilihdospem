@@ -40,6 +40,13 @@
         <div class="max-w-4xl mx-auto px-6 py-8">
             <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-8">
+                    @if (session('error'))
+                        <div
+                            class="mb-6 flex items-center gap-3 bg-rose-50 border border-rose-100 text-rose-700 px-6 py-4 rounded-2xl">
+                            <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                            <span class="text-sm font-semibold">{{ session('error') }}</span>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('dosen.store') }}" class="space-y-6">
                         @csrf
 
@@ -51,7 +58,8 @@
                                     class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
                                     <i data-lucide="user-check" class="w-5 h-5"></i>
                                 </div>
-                                <input type="text" name="nama" placeholder="Contoh: Dr. Ir. Budi Santoso, M.T."
+                                <input type="text" value="{{ old('nama') }}" name="nama"
+                                    placeholder="Contoh: Dr. Ir. Budi Santoso, M.T."
                                     class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 transition-all text-slate-700 font-medium"
                                     required>
                             </div>
@@ -65,7 +73,7 @@
                                     class="absolute top-4 left-0 pl-4 flex items-start pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
                                     <i data-lucide="award" class="w-5 h-5"></i>
                                 </div>
-                                <textarea name="bidang_keahlian" rows="4"
+                                <textarea name="bidang_keahlian" value="{{ old('bidang_keahlian') }}" rows="4"
                                     placeholder="Jelaskan spesialisasi dosen (contoh: Artificial Intelligence, Data Science, Web Security...)"
                                     class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 transition-all text-slate-700 font-medium resize-none"></textarea>
                             </div>
@@ -79,14 +87,27 @@
                                     class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
                                     <i data-lucide="users" class="w-5 h-5"></i>
                                 </div>
-                                <input type="number" name="kuota" placeholder="0" min="1"
+                                <input type="number" name="kuota" value="{{ old('kuota') }}" placeholder="0"
+                                    min="1"
                                     class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 transition-all text-slate-700 font-medium"
                                     required>
                             </div>
                             <p class="text-[11px] text-slate-400 ml-1 italic">*Jumlah maksimal mahasiswa yang dapat
                                 dibimbing.</p>
                         </div>
-
+                        <!-- Jenjang -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-slate-700 ml-1">Jenjang</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
+                                    <i data-lucide="layers" class="w-5 h-5"></i>
+                                </div>
+                                <input type="text" value="{{ old('jenjang') }}" name="jenjang"
+                                    placeholder="Contoh: S1 / D3 / S2"
+                                    class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600"
+                                    required>
+                            </div>
+                        </div>
                         <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row items-center gap-3 pt-6 border-t border-slate-100">
                             <button type="submit"

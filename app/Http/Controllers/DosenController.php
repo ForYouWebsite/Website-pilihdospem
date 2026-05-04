@@ -26,14 +26,27 @@ class DosenController extends Controller
         $request->validate([
             'nama' => 'required',
             'bidang_keahlian' => 'required',
-            'kuota' => 'required|integer|min:1'
+            'kuota' => 'required|integer|min:1',
+            'jenjang' => 'required'
         ]);
+
+        // CEK DUPLIKAT KOMBINASI
+        $exists = Dosen::where('nama', $request->nama)
+            ->where('bidang_keahlian', $request->bidang_keahlian)
+            ->where('jenjang', $request->jenjang)
+            ->where('prodi_id', Auth::user()->prodi_id)
+            ->exists();
+
+        if ($exists) {
+            return back()->with('error', 'Dosen dengan kombinasi ini sudah ada!');
+        }
 
         Dosen::create([
             'nama' => $request->nama,
             'bidang_keahlian' => $request->bidang_keahlian,
             'kuota' => $request->kuota,
-            'prodi_id' => Auth::user()->prodi_id // 🔥 AUTO
+            'jenjang' => $request->jenjang,
+            'prodi_id' => Auth::user()->prodi_id
         ]);
 
         return redirect('/admin/dosen')->with('success', 'Dosen berhasil ditambahkan');

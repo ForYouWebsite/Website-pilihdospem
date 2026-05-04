@@ -28,9 +28,17 @@ class AdminUserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
             'prodi_id' => 'required'
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.unique' => 'Email sudah digunakan',
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'prodi_id.required' => 'Program studi wajib dipilih'
         ]);
 
         User::create([

@@ -132,15 +132,16 @@
                                             <div class="flex flex-col">
                                                 <span
                                                     class="text-sm font-bold text-slate-800">{{ $dosen->nama }}</span>
-                                                <span
-                                                    class="text-[11px] text-slate-400 font-medium italic">{{ $dosen->bidang_keahlian }}</span>
+                                                <span class="text-[11px] text-slate-400 font-medium italic">
+                                                    {{ $dosen->bidang_keahlian }} • {{ $dosen->jenjang }}
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-5">
                                         <div class="max-w-[140px] mx-auto">
                                             @php
-                                                $terpakai = $dosen->pengajuans->count();
+                                                $terpakai = $dosen->pengajuans->where('status', 'disetujui')->count();
                                                 $persen = $dosen->kuota > 0 ? ($terpakai / $dosen->kuota) * 100 : 0;
                                                 $barColor =
                                                     $persen >= 100

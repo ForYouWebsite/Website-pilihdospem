@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_hp');
             $table->text('tema_ta');
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
+            $table->text('alasan')->nullable();
             $table->foreignId('dosen_id')->constrained()->cascadeOnDelete();
             $table->foreignId('prodi_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

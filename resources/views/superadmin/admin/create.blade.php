@@ -48,6 +48,15 @@
         <div class="max-w-4xl mx-auto px-6 py-8">
             <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-8">
+                    @if ($errors->any())
+                        <div class="mb-6 bg-red-50 border border-red-200 text-red-600 p-4 rounded-2xl">
+                            <ul class="text-sm space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>• {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('admin-user.store') }}" class="space-y-6">
                         @csrf
 

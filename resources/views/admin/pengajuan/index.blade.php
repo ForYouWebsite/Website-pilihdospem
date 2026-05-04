@@ -162,26 +162,48 @@
                                             <span class="text-xs font-bold text-slate-700">{{ $p->dosen->nama }}</span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-6 text-center">
+                                    <td class="px-6 py-6 text-right">
                                         @if ($p->status == 'pending')
-                                            <span
-                                                class="px-3 py-1 rounded-full bg-amber-50 text-amber-600 text-[10px] font-black uppercase border border-amber-100 flex items-center justify-center gap-1.5 w-max mx-auto">
-                                                <span
-                                                    class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                                                Pending
-                                            </span>
-                                        @elseif($p->status == 'disetujui')
-                                            <span
-                                                class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase border border-emerald-100 flex items-center justify-center gap-1.5 w-max mx-auto">
-                                                <span data-lucide="check" class="w-3 h-3"></span>
-                                                Disetujui
-                                            </span>
-                                        @else
-                                            <span
-                                                class="px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[10px] font-black uppercase border border-rose-100 flex items-center justify-center gap-1.5 w-max mx-auto">
-                                                <span data-lucide="x" class="w-3 h-3"></span>
-                                                Ditolak
-                                            </span>
+                                            <div class="flex items-center justify-end gap-2">
+                                                {{-- tombol ACC & Tolak tetap --}}
+                                            </div>
+                                        @elseif ($p->status == 'disetujui')
+                                            <a target="_blank"
+                                                href="https://wa.me/{{ preg_replace('/^0/', '62', $p->no_hp) }}?text={{ urlencode(
+                                                    'Halo ' .
+                                                        $p->nama_mahasiswa .
+                                                        ",\n\n" .
+                                                        'Pengajuan dosen pembimbing Anda telah *DISETUJUI* ✅.' .
+                                                        "\n\n" .
+                                                        'Dosen Pembimbing: ' .
+                                                        $p->dosen->nama .
+                                                        "\n\n" .
+                                                        'Silakan lanjut ke tahap berikutnya sesuai arahan akademik.' .
+                                                        "\n\n" .
+                                                        'Terima kasih.',
+                                                ) }}"
+                                                class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-bold">
+                                                Kirim WA
+                                            </a>
+                                        @elseif ($p->status == 'ditolak')
+                                            <a target="_blank"
+                                                href="https://wa.me/{{ preg_replace('/^0/', '62', $p->no_hp) }}?text={{ urlencode(
+                                                    'Halo ' .
+                                                        $p->nama_mahasiswa .
+                                                        ",\n\n" .
+                                                        'Mohon maaf, pengajuan dosen pembimbing Anda *DITOLAK* ❌.' .
+                                                        "\n\n" .
+                                                        'Alasan penolakan:' .
+                                                        "\n" .
+                                                        $p->alasan .
+                                                        "\n\n" .
+                                                        'Silakan melakukan pengajuan ulang dengan perbaikan yang diperlukan.' .
+                                                        "\n\n" .
+                                                        'Terima kasih.',
+                                                ) }}"
+                                                class="bg-rose-600 text-white px-3 py-2 rounded-xl text-xs font-bold">
+                                                Kirim WA
+                                            </a>
                                         @endif
                                     </td>
                                     <td class="px-6 py-6 text-right">
@@ -276,27 +298,53 @@
         function confirmAction(type, id) {
             const isApprove = type === 'approve';
 
-            Swal.fire({
-                title: isApprove ? 'Setujui Pengajuan?' : 'Tolak Pengajuan?',
-                text: isApprove ?
-                    "Mahasiswa akan mendapatkan dosen pembimbing ini." :
-                    "Berikan alasan penolakan (opsional) melalui jalur lain.",
-                icon: isApprove ? 'question' : 'warning',
-                showCancelButton: true,
-                confirmButtonColor: isApprove ? '#10b981' : '#e11d48',
-                cancelButtonColor: '#64748b',
-                confirmButtonText: isApprove ? 'Ya, Setujui!' : 'Ya, Tolak!',
-                cancelButtonText: 'Batal',
-                customClass: {
-                    popup: 'rounded-[2rem] p-6',
-                    confirmButton: 'rounded-xl px-6 py-3 font-bold text-xs uppercase tracking-wider',
-                    cancelButton: 'rounded-xl px-6 py-3 font-bold text-xs uppercase tracking-wider'
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById(`${type}-form-${id}`).submit();
-                }
-            });
+            if (isApprove) {
+                Swal.fire({
+                    title: 'Setujui Pengajuan?',
+                    text: "Mahasiswa akan mendapatkan dosen pembimbing ini.",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#10b981',
+                    cancelButtonColor: '#64748b',
+                    confirmButtonText: 'Ya, Setujui!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`approve-form-${id}`).submit();
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Tolak Pengajuan',
+                    inputLabel: 'Alasan Penolakan',
+                    inputAttributes: {
+                        'aria-label': 'Alasan penolakan'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Tolak',
+                    confirmButtonColor: '#e11d48',
+                    cancelButtonText: 'Batal',
+                    preConfirm: (alasan) => {
+                        if (!alasan) {
+                            Swal.showValidationMessage('Alasan wajib diisi!');
+                        }
+                        return alasan;
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // inject ke form
+                        let form = document.getElementById(`reject-form-${id}`);
+
+                        let input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "alasan";
+                        input.value = result.value;
+
+                        form.appendChild(input);
+                        form.submit();
+                    }
+                });
+            }
         }
     </script>
 </body>
